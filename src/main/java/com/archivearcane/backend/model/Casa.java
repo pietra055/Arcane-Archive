@@ -1,9 +1,12 @@
 package com.archivearcane.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "casas")
 public class Casa {
 
     @Id
@@ -12,18 +15,14 @@ public class Casa {
 
     private String nome;
     private String fundador;
-    private String simbolo;
-    private int pontuacao;
+    private String animalSimbolo;
+    private String elemento;
+
+    @OneToMany(mappedBy = "casa")
+    @JsonManagedReference
+    private List<Bruxo> bruxos = new ArrayList<>();
 
     public Casa() {
-    }
-
-    public Casa(Long id, String nome, String fundador, String simbolo, int pontuacao) {
-        this.id = id;
-        this.nome = nome;
-        this.fundador = fundador;
-        this.simbolo = simbolo;
-        this.pontuacao = pontuacao;
     }
 
     public Long getId() {
@@ -50,19 +49,27 @@ public class Casa {
         this.fundador = fundador;
     }
 
-    public String getSimbolo() {
-        return simbolo;
+    public String getAnimalSimbolo() {
+        return animalSimbolo;
     }
 
-    public void setSimbolo(String simbolo) {
-        this.simbolo = simbolo;
+    public void setAnimalSimbolo(String animalSimbolo) {
+        this.animalSimbolo = animalSimbolo;
     }
 
-    public int getPontuacao() {
-        return pontuacao;
+    public String getElemento() {
+        return elemento;
     }
 
-    public void setPontuacao(int pontuacao) {
-        this.pontuacao = pontuacao;
+    public void setElemento(String elemento) {
+        this.elemento = elemento;
+    }
+
+    public List<Bruxo> getBruxos() {
+        return bruxos;
+    }
+
+    public void setBruxos(List<Bruxo> bruxos) {
+        this.bruxos = bruxos;
     }
 }
