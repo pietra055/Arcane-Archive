@@ -28,6 +28,10 @@ public class Feitico {
     @JsonIgnore
     private Set<Bruxo> bruxos = new HashSet<>();
 
+    @OneToMany(mappedBy = "feitico")
+    @JsonIgnore
+    private Set<Combinacao> combinacoes = new HashSet<>();
+
     public Feitico() {
     }
 
@@ -85,5 +89,13 @@ public class Feitico {
 
     public void setBruxos(Set<Bruxo> bruxos) {
         this.bruxos = bruxos;
+    }
+
+    public Set<Combinacao> getCombinacoes() {
+        return combinacoes;
+}
+
+    public void setCombinacoes(Set<Combinacao> combinacoes) {
+         this.combinacoes = combinacoes;
     }
 }

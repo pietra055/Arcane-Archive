@@ -21,7 +21,7 @@ public class BruxoService {
     public Optional<Bruxo> buscarPorId(Long id) {
         return repository.findById(id);
     }
-
+ 
     public Bruxo salvar(Bruxo bruxo) {
         return repository.save(bruxo);
     }

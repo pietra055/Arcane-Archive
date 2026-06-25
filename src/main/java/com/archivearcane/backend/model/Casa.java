@@ -2,11 +2,11 @@ package com.archivearcane.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "casas")
 public class Casa {
 
     @Id
@@ -15,14 +15,26 @@ public class Casa {
 
     private String nome;
     private String fundador;
-    private String animalSimbolo;
-    private String elemento;
+    private String simbolo;
+    private int pontuacao;
 
-    @OneToMany(mappedBy = "casa")
+    @OneToMany(mappedBy = "casa", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Bruxo> bruxos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "casa", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<CriaturaMagica> criaturasMagicas = new ArrayList<>();
+
     public Casa() {
+    }
+
+    public Casa(Long id, String nome, String fundador, String simbolo, int pontuacao) {
+        this.id = id;
+        this.nome = nome;
+        this.fundador = fundador;
+        this.simbolo = simbolo;
+        this.pontuacao = pontuacao;
     }
 
     public Long getId() {
@@ -49,20 +61,20 @@ public class Casa {
         this.fundador = fundador;
     }
 
-    public String getAnimalSimbolo() {
-        return animalSimbolo;
+    public String getSimbolo() {
+        return simbolo;
     }
 
-    public void setAnimalSimbolo(String animalSimbolo) {
-        this.animalSimbolo = animalSimbolo;
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
     }
 
-    public String getElemento() {
-        return elemento;
+    public int getPontuacao() {
+        return pontuacao;
     }
 
-    public void setElemento(String elemento) {
-        this.elemento = elemento;
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
     }
 
     public List<Bruxo> getBruxos() {
@@ -71,5 +83,13 @@ public class Casa {
 
     public void setBruxos(List<Bruxo> bruxos) {
         this.bruxos = bruxos;
+    }
+
+    public List<CriaturaMagica> getCriaturasMagicas() {
+        return criaturasMagicas;
+    }
+
+    public void setCriaturasMagicas(List<CriaturaMagica> criaturasMagicas) {
+        this.criaturasMagicas = criaturasMagicas;
     }
 }

@@ -1,5 +1,6 @@
 package com.archivearcane.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,11 @@ public class CriaturaMagica {
     private String categoria;
     private String periculosidade;
     private String habitat;
+
+    @ManyToOne
+    @JoinColumn(name = "casa_id")
+    @JsonBackReference
+    private Casa casa;
 
     public CriaturaMagica() {
     }
@@ -64,5 +70,13 @@ public class CriaturaMagica {
 
     public void setHabitat(String habitat) {
         this.habitat = habitat;
+    }
+
+    public Casa getCasa() {
+    return casa;
+    }
+
+    public void setCasa(Casa casa) {
+        this.casa = casa;
     }
 }
