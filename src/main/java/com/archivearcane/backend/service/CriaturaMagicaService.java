@@ -1,11 +1,14 @@
 package com.archivearcane.backend.service;
 
+import com.archivearcane.backend.model.Casa;
 import com.archivearcane.backend.model.CriaturaMagica;
+import com.archivearcane.backend.repository.CasaRepository;
 import com.archivearcane.backend.repository.CriaturaMagicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CriaturaMagicaService {
@@ -13,35 +16,63 @@ public class CriaturaMagicaService {
     @Autowired
     private CriaturaMagicaRepository repository;
 
-    public List<CriaturaMagica> listarTodos() {
+    @Autowired
+    private CasaRepository casaRepository;
+
+    // ================= CRUD =================
+
+    public List<CriaturaMagica> listarTodas() {
         return repository.findAll();
     }
 
-    public CriaturaMagica buscarPorId(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Criatura Mágica não encontrada."));
+    public Optional<CriaturaMagica> buscarPorId(Long id) {
+        return repository.findById(id);
     }
 
-    public CriaturaMagica salvar(CriaturaMagica criaturaMagica) {
-        return repository.save(criaturaMagica);
-    }
-
-    public CriaturaMagica atualizar(Long id, CriaturaMagica novaCriatura) {
-
-        CriaturaMagica criatura = buscarPorId(id);
-
-        criatura.setNome(novaCriatura.getNome());
-        criatura.setCategoria(novaCriatura.getCategoria());
-        criatura.setPericulosidade(novaCriatura.getPericulosidade());
-        criatura.setHabitat(novaCriatura.getHabitat());
-
+    public CriaturaMagica salvar(CriaturaMagica criatura) {
         return repository.save(criatura);
     }
 
-    public void excluir(Long id) {
+    public CriaturaMagica atualizar(Long id, CriaturaMagica criaturaAtualizada) {
 
-        CriaturaMagica criatura = buscarPorId(id);
+        return repository.findById(id)
+                .map(criatura -> {
 
-        repository.delete(criatura);
+                    criatura.setNome(criaturaAtualizada.getNome());
+                    criatura.setCategoria(criaturaAtualizada.getCategoria());
+                    criatura.setPericulosidade(criaturaAtualizada.getPericulosidade());
+                    criatura.setHabitat(criaturaAtualizada.getHabitat());
+                    criatura.setCasa(criaturaAtualizada.getCasa());
+
+                    return repository.save(criatura);
+
+                }).orElseThrow(() -> new RuntimeException("Criatura não encontrada."));
     }
+
+    public void deletar(Long id) {
+        repository.deleteById(id);
+    }
+
+    // ================= CONSULTAS =================
+
+    public List<CriaturaMagica> buscarPorCategoria(String categoria) {
+        return repository.findByCategoria(categoria);
+    }
+
+    public List<CriaturaMagica> buscarPorPericulosidade(String periculosidade) {
+        return repository.findByPericulosidade(periculosidade);
+    }
+
+    public List<CriaturaMagica> buscarPorHabitat(String habitat) {
+        return repository.findByHabitat(habitat);
+    }
+
+    public List<CriaturaMagica> buscarPorCasa(Long idCasa) {
+
+        Casa casa = casaRepository.findById(idCasa)
+                .orElseThrow(() -> new RuntimeException("Casa não encontrada."));
+
+        return repository.findByCasa(casa);
+    }
+
 }

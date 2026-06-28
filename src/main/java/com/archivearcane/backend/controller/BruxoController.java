@@ -14,6 +14,8 @@ public class BruxoController {
     @Autowired
     private BruxoService service;
 
+    // ===================== CRUD =====================
+
     @GetMapping
     public List<Bruxo> listarTodos() {
         return service.listarTodos();
@@ -38,5 +40,22 @@ public class BruxoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
+    }
+
+    // ===================== CONSULTAS =====================
+
+    @GetMapping("/casa/{casaId}")
+    public List<Bruxo> buscarPorCasa(@PathVariable Long casaId) {
+        return service.buscarPorCasa(casaId);
+    }
+
+    @GetMapping("/ano/{anoEscolar}")
+    public List<Bruxo> buscarPorAnoEscolar(@PathVariable Integer anoEscolar) {
+        return service.buscarPorAnoEscolar(anoEscolar);
+    }
+
+    @GetMapping("/nivel/{nivel}")
+    public List<Bruxo> buscarPorNivelAprendizado(@PathVariable String nivel) {
+        return service.buscarPorNivelAprendizado(nivel);
     }
 }

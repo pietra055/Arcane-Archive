@@ -1,6 +1,9 @@
 package com.archivearcane.backend.service;
 
+import com.archivearcane.backend.model.Elemento;
 import com.archivearcane.backend.model.Feitico;
+import com.archivearcane.backend.model.NivelDificuldade;
+import com.archivearcane.backend.model.TipoFeitico;
 import com.archivearcane.backend.repository.FeiticoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ public class FeiticoService {
 
     @Autowired
     private FeiticoRepository repository;
+
+    // ===================== CRUD =====================
 
     public List<Feitico> listarTodos() {
         return repository.findAll();
@@ -42,5 +47,19 @@ public class FeiticoService {
 
     public void deletar(Long id) {
         repository.deleteById(id);
+    }
+
+    // ===================== CONSULTAS =====================
+
+    public List<Feitico> buscarPorElemento(Elemento elemento) {
+        return repository.findByElemento(elemento);
+    }
+
+    public List<Feitico> buscarPorTipo(TipoFeitico tipo) {
+        return repository.findByTipo(tipo);
+    }
+
+    public List<Feitico> buscarPorNivelDificuldade(NivelDificuldade nivelDificuldade) {
+        return repository.findByNivelDificuldade(nivelDificuldade);
     }
 }

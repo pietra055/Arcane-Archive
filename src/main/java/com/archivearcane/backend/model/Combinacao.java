@@ -3,28 +3,55 @@ package com.archivearcane.backend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "combinacoes")
+@Table(
+    name = "combinacoes",
+    uniqueConstraints = @UniqueConstraint(columnNames = {
+        "elemento1",
+        "elemento2",
+        "resultado"
+    })
+)
+
 public class Combinacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String elemento1;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Elemento elemento1;
 
-    private String elemento2;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Elemento elemento2;
 
-    private String resultado;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Elemento resultado;
 
+    @Column(nullable = false)
     private String descricao;
 
-    private Integer nivelDificuldade;
-
-    @ManyToOne
-    @JoinColumn(name = "feitico_id")
-    private Feitico feitico;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private NivelDificuldade nivelDificuldade;
 
     public Combinacao() {
+    }
+
+    public Combinacao(Long id,
+                      Elemento elemento1,
+                      Elemento elemento2,
+                      Elemento resultado,
+                      String descricao,
+                      NivelDificuldade nivelDificuldade) {
+        this.id = id;
+        this.elemento1 = elemento1;
+        this.elemento2 = elemento2;
+        this.resultado = resultado;
+        this.descricao = descricao;
+        this.nivelDificuldade = nivelDificuldade;
     }
 
     public Long getId() {
@@ -35,27 +62,27 @@ public class Combinacao {
         this.id = id;
     }
 
-    public String getElemento1() {
+    public Elemento getElemento1() {
         return elemento1;
     }
 
-    public void setElemento1(String elemento1) {
+    public void setElemento1(Elemento elemento1) {
         this.elemento1 = elemento1;
     }
 
-    public String getElemento2() {
+    public Elemento getElemento2() {
         return elemento2;
     }
 
-    public void setElemento2(String elemento2) {
+    public void setElemento2(Elemento elemento2) {
         this.elemento2 = elemento2;
     }
 
-    public String getResultado() {
+    public Elemento getResultado() {
         return resultado;
     }
 
-    public void setResultado(String resultado) {
+    public void setResultado(Elemento resultado) {
         this.resultado = resultado;
     }
 
@@ -67,19 +94,11 @@ public class Combinacao {
         this.descricao = descricao;
     }
 
-    public Integer getNivelDificuldade() {
+    public NivelDificuldade getNivelDificuldade() {
         return nivelDificuldade;
     }
 
-    public void setNivelDificuldade(Integer nivelDificuldade) {
+    public void setNivelDificuldade(NivelDificuldade nivelDificuldade) {
         this.nivelDificuldade = nivelDificuldade;
-    }
-
-    public Feitico getFeitico() {
-        return feitico;
-    }
-
-    public void setFeitico(Feitico feitico) {
-        this.feitico = feitico;
     }
 }

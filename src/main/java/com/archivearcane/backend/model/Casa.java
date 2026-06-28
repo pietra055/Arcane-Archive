@@ -2,6 +2,7 @@ package com.archivearcane.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class Casa {
     private int pontuacao;
 
     @OneToMany(mappedBy = "casa", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("casa-bruxos")
     private List<Bruxo> bruxos = new ArrayList<>();
 
     @OneToMany(mappedBy = "casa", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("casa-criaturas")
     private List<CriaturaMagica> criaturasMagicas = new ArrayList<>();
 
     public Casa() {

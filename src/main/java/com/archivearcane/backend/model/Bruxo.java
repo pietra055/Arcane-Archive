@@ -20,7 +20,7 @@ public class Bruxo {
 
     @ManyToOne
     @JoinColumn(name = "casa_id")
-    @JsonBackReference
+    @JsonBackReference("casa-bruxos")
     private Casa casa;
 
     @ManyToMany

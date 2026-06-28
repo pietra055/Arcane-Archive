@@ -14,6 +14,8 @@ public class CasaService {
     @Autowired
     private CasaRepository repository;
 
+    // ===================== CRUD =====================
+
     public List<Casa> listarTodas() {
         return repository.findAll();
     }
@@ -33,6 +35,7 @@ public class CasaService {
                     casa.setFundador(casaAtualizada.getFundador());
                     casa.setSimbolo(casaAtualizada.getSimbolo());
                     casa.setPontuacao(casaAtualizada.getPontuacao());
+
                     return repository.save(casa);
                 })
                 .orElseThrow(() -> new RuntimeException("Casa não encontrada."));
@@ -40,5 +43,15 @@ public class CasaService {
 
     public void deletar(Long id) {
         repository.deleteById(id);
+    }
+
+    // ===================== CONSULTAS =====================
+
+    public List<Casa> buscarPorFundador(String fundador) {
+        return repository.findByFundador(fundador);
+    }
+
+    public List<Casa> rankingCasas() {
+        return repository.findAllByOrderByPontuacaoDesc();
     }
 }

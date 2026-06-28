@@ -16,21 +16,20 @@ public class Feitico {
 
     private String nome;
 
-    private String elemento;
+    @Enumerated(EnumType.STRING)
+    private Elemento elemento;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoFeitico tipo;
 
     private String descricao;
 
-    private Integer nivelDificuldade;
+    @Enumerated(EnumType.STRING)
+    private NivelDificuldade nivelDificuldade;
 
     @ManyToMany(mappedBy = "feiticos")
     @JsonIgnore
     private Set<Bruxo> bruxos = new HashSet<>();
-
-    @OneToMany(mappedBy = "feitico")
-    @JsonIgnore
-    private Set<Combinacao> combinacoes = new HashSet<>();
 
     public Feitico() {
     }
@@ -51,19 +50,19 @@ public class Feitico {
         this.nome = nome;
     }
 
-    public String getElemento() {
+    public Elemento getElemento() {
         return elemento;
     }
 
-    public void setElemento(String elemento) {
+    public void setElemento(Elemento elemento) {
         this.elemento = elemento;
     }
 
-    public String getTipo() {
+    public TipoFeitico getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoFeitico tipo) {
         this.tipo = tipo;
     }
 
@@ -75,11 +74,11 @@ public class Feitico {
         this.descricao = descricao;
     }
 
-    public Integer getNivelDificuldade() {
+    public NivelDificuldade getNivelDificuldade() {
         return nivelDificuldade;
     }
 
-    public void setNivelDificuldade(Integer nivelDificuldade) {
+    public void setNivelDificuldade(NivelDificuldade nivelDificuldade) {
         this.nivelDificuldade = nivelDificuldade;
     }
 
@@ -89,13 +88,5 @@ public class Feitico {
 
     public void setBruxos(Set<Bruxo> bruxos) {
         this.bruxos = bruxos;
-    }
-
-    public Set<Combinacao> getCombinacoes() {
-        return combinacoes;
-}
-
-    public void setCombinacoes(Set<Combinacao> combinacoes) {
-         this.combinacoes = combinacoes;
     }
 }

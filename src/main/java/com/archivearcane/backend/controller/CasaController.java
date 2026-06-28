@@ -16,9 +16,25 @@ public class CasaController {
     @Autowired
     private CasaService service;
 
+    // ===================== CRUD =====================
+
     @GetMapping
     public List<Casa> listarTodas() {
         return service.listarTodas();
+    }
+
+    @GetMapping("/teste")
+    public String teste() {
+        return "FUNCIONOU";
+}
+
+    @GetMapping("/ranking-casas")
+    public List<Casa> rankingCasas() {
+        return service.rankingCasas();
+    }
+    @GetMapping("/fundador/{fundador}")
+    public List<Casa> buscarPorFundador(@PathVariable String fundador) {
+        return service.buscarPorFundador(fundador);
     }
 
     @GetMapping("/{id}")
@@ -32,7 +48,8 @@ public class CasaController {
     }
 
     @PutMapping("/{id}")
-    public Casa atualizar(@PathVariable Long id, @RequestBody Casa casa) {
+    public Casa atualizar(@PathVariable Long id,
+                          @RequestBody Casa casa) {
         return service.atualizar(id, casa);
     }
 
@@ -40,4 +57,5 @@ public class CasaController {
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
+
 }

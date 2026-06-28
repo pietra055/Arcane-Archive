@@ -18,7 +18,7 @@ public class CriaturaMagica {
 
     @ManyToOne
     @JoinColumn(name = "casa_id")
-    @JsonBackReference
+    @JsonBackReference("casa-criaturas")
     private Casa casa;
 
     public CriaturaMagica() {
