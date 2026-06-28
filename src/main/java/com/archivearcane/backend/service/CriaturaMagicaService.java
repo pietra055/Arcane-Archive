@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CriaturaMagicaService {
@@ -25,8 +24,10 @@ public class CriaturaMagicaService {
         return repository.findAll();
     }
 
-    public Optional<CriaturaMagica> buscarPorId(Long id) {
-        return repository.findById(id);
+    public CriaturaMagica buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Criatura"));
     }
 
     public CriaturaMagica salvar(CriaturaMagica criatura) {
@@ -46,7 +47,9 @@ public class CriaturaMagicaService {
 
                     return repository.save(criatura);
 
-                }).orElseThrow(() -> new RuntimeException("Criatura não encontrada."));
+                })
+                .orElseThrow(() ->
+                        new RuntimeException("Criatura"));
     }
 
     public void deletar(Long id) {
@@ -70,7 +73,8 @@ public class CriaturaMagicaService {
     public List<CriaturaMagica> buscarPorCasa(Long idCasa) {
 
         Casa casa = casaRepository.findById(idCasa)
-                .orElseThrow(() -> new RuntimeException("Casa não encontrada."));
+                .orElseThrow(() ->
+                        new RuntimeException("Casa"));
 
         return repository.findByCasa(casa);
     }

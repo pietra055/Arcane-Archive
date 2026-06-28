@@ -24,8 +24,7 @@ public class CriaturaMagicaController {
 
     @GetMapping("/{id}")
     public CriaturaMagica buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Criatura não encontrada."));
+        return service.buscarPorId(id);
     }
 
     @PostMapping

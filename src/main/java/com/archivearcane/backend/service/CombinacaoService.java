@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CombinacaoService {
@@ -21,8 +20,10 @@ public class CombinacaoService {
         return repository.findAll();
     }
 
-    public Optional<Combinacao> buscarPorId(Long id) {
-        return repository.findById(id);
+    public Combinacao buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Combinação"));
     }
 
     public Combinacao salvar(Combinacao combinacao) {
@@ -30,19 +31,22 @@ public class CombinacaoService {
     }
 
     public Combinacao atualizar(Long id, Combinacao combinacaoAtualizada) {
-        return repository.findById(id)
-                .map(combinacao -> {
 
-                    combinacao.setElemento1(combinacaoAtualizada.getElemento1());
-                    combinacao.setElemento2(combinacaoAtualizada.getElemento2());
-                    combinacao.setResultado(combinacaoAtualizada.getResultado());
-                    combinacao.setDescricao(combinacaoAtualizada.getDescricao());
-                    combinacao.setNivelDificuldade(combinacaoAtualizada.getNivelDificuldade());
+    return repository.findById(id)
+            .map(combinacao -> {
 
-                    return repository.save(combinacao);
-                })
-                .orElseThrow(() -> new RuntimeException("Combinação não encontrada."));
-    }
+                combinacao.setElemento1(combinacaoAtualizada.getElemento1());
+                combinacao.setElemento2(combinacaoAtualizada.getElemento2());
+                combinacao.setResultado(combinacaoAtualizada.getResultado());
+                combinacao.setDescricao(combinacaoAtualizada.getDescricao());
+                combinacao.setNivelDificuldade(combinacaoAtualizada.getNivelDificuldade());
+
+                return repository.save(combinacao);
+
+            })
+            .orElseThrow(() ->
+                    new RuntimeException("Combinação"));
+}
 
     public void deletar(Long id) {
         repository.deleteById(id);
@@ -62,7 +66,11 @@ public class CombinacaoService {
         return repository.findByElemento2(elemento2);
     }
 
-    public Optional<Combinacao> buscarPorElementos(Elemento elemento1, Elemento elemento2) {
-        return repository.findByElemento1AndElemento2(elemento1, elemento2);
+    public Combinacao buscarPorElementos(Elemento elemento1, Elemento elemento2) {
+
+        return repository.findByElemento1AndElemento2(elemento1, elemento2)
+                .orElseThrow(() ->
+                        new RuntimeException("Combinação"));
     }
+
 }

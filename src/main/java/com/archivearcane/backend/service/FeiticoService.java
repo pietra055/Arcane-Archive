@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FeiticoService {
@@ -23,8 +22,10 @@ public class FeiticoService {
         return repository.findAll();
     }
 
-    public Optional<Feitico> buscarPorId(Long id) {
-        return repository.findById(id);
+    public Feitico buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Feitiço"));
     }
 
     public Feitico salvar(Feitico feitico) {
@@ -32,8 +33,10 @@ public class FeiticoService {
     }
 
     public Feitico atualizar(Long id, Feitico feiticoAtualizado) {
+
         return repository.findById(id)
                 .map(feitico -> {
+
                     feitico.setNome(feiticoAtualizado.getNome());
                     feitico.setElemento(feiticoAtualizado.getElemento());
                     feitico.setTipo(feiticoAtualizado.getTipo());
@@ -41,8 +44,10 @@ public class FeiticoService {
                     feitico.setNivelDificuldade(feiticoAtualizado.getNivelDificuldade());
 
                     return repository.save(feitico);
+
                 })
-                .orElseThrow(() -> new RuntimeException("Feitiço não encontrado."));
+                .orElseThrow(() ->
+                        new RuntimeException("Feitiço"));
     }
 
     public void deletar(Long id) {
@@ -62,4 +67,5 @@ public class FeiticoService {
     public List<Feitico> buscarPorNivelDificuldade(NivelDificuldade nivelDificuldade) {
         return repository.findByNivelDificuldade(nivelDificuldade);
     }
+
 }

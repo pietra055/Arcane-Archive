@@ -20,9 +20,13 @@ public class CasaService {
         return repository.findAll();
     }
 
-    public Optional<Casa> buscarPorId(Long id) {
-        return repository.findById(id);
-    }
+    public Casa buscarPorId(Long id) {
+
+    return repository.findById(id)
+            .orElseThrow(() ->
+                    new RuntimeException("Casa"));
+
+}
 
     public Casa salvar(Casa casa) {
         return repository.save(casa);
@@ -38,7 +42,7 @@ public class CasaService {
 
                     return repository.save(casa);
                 })
-                .orElseThrow(() -> new RuntimeException("Casa não encontrada."));
+                .orElseThrow(() -> new RuntimeException("Casa"));
     }
 
     public void deletar(Long id) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bruxos")
+@CrossOrigin(origins = "*")
 public class BruxoController {
 
     @Autowired
@@ -23,8 +24,7 @@ public class BruxoController {
 
     @GetMapping("/{id}")
     public Bruxo buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Bruxo não encontrado."));
+        return service.buscarPorId(id);
     }
 
     @PostMapping
@@ -33,7 +33,8 @@ public class BruxoController {
     }
 
     @PutMapping("/{id}")
-    public Bruxo atualizar(@PathVariable Long id, @RequestBody Bruxo bruxo) {
+    public Bruxo atualizar(@PathVariable Long id,
+                           @RequestBody Bruxo bruxo) {
         return service.atualizar(id, bruxo);
     }
 
@@ -58,4 +59,5 @@ public class BruxoController {
     public List<Bruxo> buscarPorNivelAprendizado(@PathVariable String nivel) {
         return service.buscarPorNivelAprendizado(nivel);
     }
+
 }

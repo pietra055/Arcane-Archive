@@ -25,8 +25,7 @@ public class CombinacaoController {
 
     @GetMapping("/{id}")
     public Combinacao buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Combinação não encontrada."));
+        return service.buscarPorId(id);
     }
 
     @PostMapping
@@ -65,8 +64,7 @@ public class CombinacaoController {
     @GetMapping("/{elemento1}/{elemento2}")
     public Combinacao buscarPorElementos(@PathVariable Elemento elemento1,
                                          @PathVariable Elemento elemento2) {
-
-        return service.buscarPorElementos(elemento1, elemento2)
-                .orElseThrow(() -> new RuntimeException("Combinação não encontrada."));
+        return service.buscarPorElementos(elemento1, elemento2);
     }
+
 }

@@ -38,9 +38,9 @@ public class CasaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Casa> buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id);
-    }
+    public Casa buscarPorId(@PathVariable Long id) {
+    return service.buscarPorId(id);
+}
 
     @PostMapping
     public Casa salvar(@RequestBody Casa casa) {

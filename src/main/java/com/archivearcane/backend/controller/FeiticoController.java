@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/feiticos")
@@ -27,7 +26,7 @@ public class FeiticoController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Feitico> buscarPorId(@PathVariable Long id) {
+    public Feitico buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
 
@@ -63,4 +62,5 @@ public class FeiticoController {
     public List<Feitico> buscarPorNivelDificuldade(@PathVariable NivelDificuldade nivel) {
         return service.buscarPorNivelDificuldade(nivel);
     }
+
 }

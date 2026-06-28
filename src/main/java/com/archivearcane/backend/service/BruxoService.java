@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BruxoService {
@@ -25,8 +24,10 @@ public class BruxoService {
         return repository.findAll();
     }
 
-    public Optional<Bruxo> buscarPorId(Long id) {
-        return repository.findById(id);
+    public Bruxo buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Bruxo"));
     }
 
     public Bruxo salvar(Bruxo bruxo) {
@@ -34,9 +35,9 @@ public class BruxoService {
         if (bruxo.getCasa() != null) {
 
             Casa casa = casaRepository.findById(bruxo.getCasa().getId())
-                    .orElseThrow(() -> new RuntimeException("Casa não encontrada."));
+                    .orElseThrow(() ->
+                            new RuntimeException("Casa"));
 
-            // Regra do relatório:
             // Ao cadastrar um bruxo, a casa recebe +10 pontos.
             casa.setPontuacao(casa.getPontuacao() + 10);
 
@@ -49,8 +50,10 @@ public class BruxoService {
     }
 
     public Bruxo atualizar(Long id, Bruxo bruxoAtualizado) {
+
         return repository.findById(id)
                 .map(bruxo -> {
+
                     bruxo.setNome(bruxoAtualizado.getNome());
                     bruxo.setIdade(bruxoAtualizado.getIdade());
                     bruxo.setAnoEscolar(bruxoAtualizado.getAnoEscolar());
@@ -59,13 +62,28 @@ public class BruxoService {
                     bruxo.setFeiticos(bruxoAtualizado.getFeiticos());
 
                     return repository.save(bruxo);
+
                 })
-                .orElseThrow(() -> new RuntimeException("Bruxo não encontrado."));
+                .orElseThrow(() ->
+                        new RuntimeException("Bruxo"));
     }
 
     public void deletar(Long id) {
-        repository.deleteById(id);
+
+    Bruxo bruxo = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Bruxo"));
+
+    if (bruxo.getCasa() != null) {
+
+        Casa casa = bruxo.getCasa();
+
+        casa.setPontuacao(casa.getPontuacao() - 10);
+
+        casaRepository.save(casa);
     }
+
+    repository.delete(bruxo);
+}
 
     // ===================== CONSULTAS =====================
 
@@ -80,4 +98,5 @@ public class BruxoService {
     public List<Bruxo> buscarPorNivelAprendizado(String nivel) {
         return repository.findByNivelAprendizadoMagia(nivel);
     }
+
 }
