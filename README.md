@@ -171,7 +171,7 @@ Padronizando as respostas de erro da API.
 ## Clonar o projeto
 
 ```bash
-git clone https://github.com/pietra055/archive-arcane.git
+git clone https://github.com/pietra055/Arcane-Archive.git
 ```
 
 ## Entrar na pasta
