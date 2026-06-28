@@ -16,6 +16,12 @@ import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Service responsável pela geração dos relatórios da aplicação.
+ * Produz um relatório geral em formato PDF contendo estatísticas,
+ * ranking das casas e informações cadastradas no sistema.
+ */
+
 @Service
 public class RelatorioService {
 
@@ -33,6 +39,16 @@ public class RelatorioService {
 
     @Autowired
     private CombinacaoRepository combinacaoRepository;
+
+    /**
+     * Gera o relatório geral do sistema em formato PDF.
+     * O documento contém estatísticas da aplicação, ranking das casas,
+     * informações das casas, bruxos, criaturas mágicas, feitiços
+     * e combinações de elementos.
+     *
+     * @return vetor de bytes correspondente ao arquivo PDF gerado.
+     * @throws RuntimeException caso ocorra erro durante a geração do relatório.
+     */
 
     public byte[] gerarRelatorioGeral() {
 
