@@ -33,6 +33,9 @@ Desenvolver uma API REST capaz de gerenciar uma academia de magia através de op
 * OpenPDF
 * REST API
 * Thunder Client
+* React.js
+* Tailwind CSS
+* 
 * Git e GitHub
 
 ---
@@ -54,6 +57,18 @@ src
 
 ---
 
+---
+# 📂 Estrutura do Frontend
+```
+src/
+    ├──  assets/       
+    ├──  components/   
+    ├──  pages/        
+    ├──  context/      
+    └── App.jsx
+```
+--- 
+---
 # 📚 Funcionalidades
 
 ## Casas
@@ -116,7 +131,12 @@ src
 * Busca pelos elementos utilizados
 
 ---
-
+# 🛠 Funcionalidades do Frontend
+* Fluxo de Matrícula: Cadastro dinâmico de novos bruxos com customização visual baseada na casa escolhida
+* Painel do Salão Comunal: Dashboard central para visualização de status do bruxo e pontos da linhagem
+* Grimório Arcano: Interface interativa para estudo e domínio de feitiços
+* Ranking em Tempo Real: Exibição competitiva da pontuação das casas.
+---
 # ⭐ Regras de Negócio
 
 O sistema implementa regras específicas para a academia de magia.
@@ -191,7 +211,24 @@ ou
 ```bash
 mvn spring-boot:run
 ```
+#  ▶ Como executar o Frontend
 
+## Clonar o projeto
+o Primeiro passo é clonar o projeto, como exemplificado anteriormente.
+
+```bash
+git clone https://github.com/pietra055/Arcane-Archive.git
+```
+
+## Entrar na pasta
+```bash
+cd frontend
+```
+
+## Executar
+```bash
+npm run dev
+```
 ---
 
 # Banco de Dados
@@ -205,6 +242,8 @@ spring.datasource.url=jdbc:mysql://localhost:3306/archive_arcane
 spring.datasource.username=root
 spring.datasource.password=*****
 ```
+
+---
 
 ---
 
