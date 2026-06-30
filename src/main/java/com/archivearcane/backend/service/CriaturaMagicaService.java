@@ -53,6 +53,16 @@ public class CriaturaMagicaService {
      * @return criatura cadastrada.
      */
     public CriaturaMagica salvar(CriaturaMagica criatura) {
+
+        if (criatura.getCasa() != null) {
+
+            Casa casa = casaRepository.findById(criatura.getCasa().getId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Casa"));
+
+            criatura.setCasa(casa);
+        }
+
         return repository.save(criatura);
     }
 
@@ -72,7 +82,18 @@ public class CriaturaMagicaService {
                     criatura.setCategoria(criaturaAtualizada.getCategoria());
                     criatura.setPericulosidade(criaturaAtualizada.getPericulosidade());
                     criatura.setHabitat(criaturaAtualizada.getHabitat());
-                    criatura.setCasa(criaturaAtualizada.getCasa());
+
+                    if (criaturaAtualizada.getCasa() != null) {
+
+                        Casa casa = casaRepository.findById(
+                                criaturaAtualizada.getCasa().getId())
+                                .orElseThrow(() ->
+                                        new RuntimeException("Casa"));
+
+                        criatura.setCasa(casa);
+                    } else {
+                        criatura.setCasa(null);
+                    }
 
                     return repository.save(criatura);
 
