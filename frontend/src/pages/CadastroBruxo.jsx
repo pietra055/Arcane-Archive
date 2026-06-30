@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import bgCastle from '../assets/bg-castle.png';
 
-// CORREÇÃO 1: Adicionamos o 'onCadastroSucesso' aqui nos parâmetros recebidos
 export default function CadastroBruxo({ casa, onVoltar, onCadastroSucesso }) {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [nivelMagia, setNivelMagia] = useState('INICIANTE');
   const [carregando, setCarregando] = useState(false);
 
-  // Mapeamento visual para customizar a página dependendo da casa escolhida
   const estilosCasas = {
     AQUARIS: { borda: 'border-cyan-500/40', texto: 'text-cyan-400', botao: 'from-cyan-600 to-blue-600', sombra: 'shadow-cyan-500/20' },
     IGNIS: { borda: 'border-orange-500/40', texto: 'text-orange-500', botao: 'from-orange-600 to-red-600', sombra: 'shadow-orange-500/20' },
@@ -19,40 +16,30 @@ export default function CadastroBruxo({ casa, onVoltar, onCadastroSucesso }) {
 
   const configVisual = estilosCasas[casa.id] || estilosCasas.AQUARIS;
 
-  const handleSubmitReal = async (e) => {
+  // VERSÃO TESTE: Não depende de servidor/banco de dados
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!nome.trim() || !idade){
-      alert("⚠️ Preencha todos os pergaminhos!");
+    
+    if (!nome.trim() || !idade) {
+      alert("⚠️ Preencha todos os pergaminhos antes de prosseguir!");
       return;
-    } 
+    }
 
     setCarregando(true);
 
-    const novoBruxo = {
-      nome: nome,
-      idade: Number(idade),
-      anoEscolar: 1,
-      nivelAprendizadoMagia: nivelMagia,
-      casa: { id: casa.id }
-    };
-
-    try {
-      // Chamada para o endpoint @PostMapping do BruxoController
-      const response = await axios.post('http://localhost:8080/bruxos', novoBruxo);
-      
-      alert(`🔮 Bem-vindo(a), ${nome}! Matrícula realizada com sucesso.`);
-      
-      // Passa os dados salvos (incluindo o ID gerado pelo banco) para o App
-      onCadastroSucesso(response.data); 
-    } catch (error) {
-      console.error("Erro ao registrar no Grimório:", error);
-      alert("❌ O ritual falhou. Verifique se o backend está ativo.");
-    } finally {
+    setTimeout(() => {
       setCarregando(false);
-    }
+      alert(`🔮 [MODO TESTE] Matriculado com sucesso! Bem-vindo(a) à linhagem ${casa.nome}.`);
+      
+      const dadosDoNovoBruxo = {
+        nome: nome,
+        idade: Number(idade),
+        nivelMagia: nivelMagia
+      };
+      
+      onCadastroSucesso(dadosDoNovoBruxo); 
+    }, 1200);
   };
-  
 
   return (
     <div 
@@ -63,7 +50,6 @@ export default function CadastroBruxo({ casa, onVoltar, onCadastroSucesso }) {
 
       <div className="relative z-10 w-full max-w-lg bg-slate-950/90 border border-amber-500/30 rounded-2xl p-8 md:p-10 shadow-2xl backdrop-blur-md my-auto" style={{ borderColor: casa.glow?.split(' ')[1]?.split('/')[0] || '#f59e0b' }}>
         
-        {/* Título adaptável à Casa */}
         <div className="text-center mb-6">
           <button type="button" onClick={onVoltar} className="text-xs text-slate-400 hover:text-amber-400 uppercase tracking-widest absolute top-4 left-6 transition-colors">
             ← Voltar
