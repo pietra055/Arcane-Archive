@@ -35,7 +35,6 @@ Desenvolver uma API REST capaz de gerenciar uma academia de magia através de op
 * Thunder Client
 * React.js
 * Tailwind CSS
-* 
 * Git e GitHub
 
 ---
